@@ -1,0 +1,6 @@
+I'm not sure what went wrong with the code I just uploaded. I thoroughly checked the loop
+and I am confident that it runs in the proper order (from bottom to top diagonals, from left to right in diagonals)
+and fetches the right elements as neighbours. The fact that it outputs garbage, to me, hints at wrong scalars in the 
+summation of the individual elements and rho. 
+
+Greetings Lucas
