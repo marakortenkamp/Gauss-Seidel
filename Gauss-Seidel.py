@@ -35,8 +35,8 @@ def compute_phi_2d_gauss_seidel(rho, l, max_it=1E5, epsilon_0=1):
     ### run main loop ###
     for k, l in enumerate(indices):
         for m in range(diag_len[k]):
-            ii = l[0] + m
-            ji = l[1] + m
+            i = l[0] + m
+            j = l[1] + m
             print(rho[i,j])
 
 
