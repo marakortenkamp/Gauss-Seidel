@@ -12,11 +12,17 @@ import numpy as np
 ### feedback appreciated
 
 
-rho1 = np.arange(12).reshape(3,4)
-rho2 = np.arange(12).reshape(4,3)
-rho3 = np.arange(8).reshape(4,2)
-rho4 = np.arange(8).reshape(2,4)
+rho1 = np.zeros((5,5))
+rho1[0,0] = 10
+rho1[-1,-1] = -10
 
+rho2 = np.zeros((5,6))
+rho2[0,0] = 10
+rho2[-1,-1] = -10
+
+rho3 = np.zeros((3,6))
+rho3[0,0] = 10
+rho3[-1,-1] = -10
 
 def compute_phi_2d_gauss_seidel(rho, l, max_it=1E5, epsilon_0=1):
     ### define relevant variables ###
@@ -30,16 +36,16 @@ def compute_phi_2d_gauss_seidel(rho, l, max_it=1E5, epsilon_0=1):
 
 
     ### define indexing lists for loop ###
-    index_y = [ny - i if ny - i > 0 else 0 for i in range(1, nx + ny)]
-    index_x = [i - ny if i - ny > 0 else 0 for i in range(1, nx + ny)]
-    indices = [(a,b) for a,b in zip(index_y,index_x)]
+    index_y  = [ny - i if ny - i > 0 else 0 for i in range(1, nx + ny)]
+    index_x  = [i - ny if i - ny > 0 else 0 for i in range(1, nx + ny)]
+    indices  = [(a,b) for a,b in zip(index_y,index_x)]
     diag_len = [n_min for i in np.ones(nx + ny - 1, dtype=np.int8)]
     for i in range(n_min):
         diag_len[i] = i + 1
         diag_len[-i-1] = i + 1
 
     ### run main loop ###
-    for it in range(10000):
+    for n_iteration in range(20000):
         for k, l in enumerate(indices):
             for m in range(diag_len[k]):
                 i = l[0] + m
@@ -58,12 +64,13 @@ def compute_phi_2d_gauss_seidel(rho, l, max_it=1E5, epsilon_0=1):
                                    + hy * (phi_up + phi_down)
                                    + 1 / epsilon_0 * rho[i,j]
                                    ))
+
     return phi
 
 
-
-
-print(compute_phi_2d_gauss_seidel(rho1, [1, 1]))
-print(compute_phi_2d_gauss_seidel(rho2, [1, 1]))
-print(compute_phi_2d_gauss_seidel(rho3, [1, 1]))
-print(compute_phi_2d_gauss_seidel(rho4, [1, 1]))
+print(rho1)
+print(compute_phi_2d_gauss_seidel(rho1, [4, 4]))
+print(rho2)
+print(compute_phi_2d_gauss_seidel(rho2, [4, 4]))
+print(rho3)
+print(compute_phi_2d_gauss_seidel(rho3, [4, 4]))
